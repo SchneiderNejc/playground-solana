@@ -122,6 +122,16 @@ pub mod tic_tac_toe {
 }
 
 
+
+#[error_code]
+pub enum TicTacToeError {
+    TileOutOfBounds,
+    TileAlreadySet,
+    GameAlreadyOver,
+    NotPlayersTurn,
+    GameAlreadyStarted
+}
+
 #[derive(AnchorSerialize, AnchorDeserialize)]
 pub struct Tile {
     row: u8,
