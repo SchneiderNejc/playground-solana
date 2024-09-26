@@ -18,25 +18,20 @@ pub mod tic_tac_toe {
         Ok(())
     }
 
-
     pub fn is_active(&self) -> bool {
         self.state == GameState::Active
     }
-
 
     fn current_player_index(&self) -> usize {
         ((self.turn - 1) % 2) as usize
     }
 
-
     pub fn current_player(&self) -> Pubkey {
         self.players[self.current_player_index()]
     }
 
-
     pub fn play(&mut self, tile: &Tile) -> Result<()> {
         require!(self.is_active(), TicTacToeError::GameAlreadyOver);
-
 
         match tile {
             tile @ Tile {
@@ -51,19 +46,13 @@ pub mod tic_tac_toe {
             },
             _ => return Err(TicTacToeError::TileOutOfBounds.into()),
         }
-
-
         self.update_state();
-
 
         if GameState::Active == self.state {
             self.turn += 1;
         }
-
-
         Ok(())
     }
-
 
     fn is_winning_trio(&self, trio: [(usize, usize); 3]) -> bool {
         let [first, second, third] = trio;
@@ -71,7 +60,6 @@ pub mod tic_tac_toe {
             && self.board[first.0][first.1] == self.board[second.0][second.1]
             && self.board[first.0][first.1] == self.board[third.0][third.1]
     }
-
 
     fn update_state(&mut self) {
         for i in 0..=2 {
@@ -91,7 +79,6 @@ pub mod tic_tac_toe {
             }
         }
 
-
         // three of the same in one diagonal
         if self.is_winning_trio([(0, 0), (1, 1), (2, 2)])
             || self.is_winning_trio([(0, 2), (1, 1), (2, 0)])
@@ -102,7 +89,6 @@ pub mod tic_tac_toe {
             return;
         }
 
-
         // reaching this code means the game has not been won,
         // so if there are unfilled tiles left, it's still active
         for row in 0..=2 {
@@ -112,7 +98,6 @@ pub mod tic_tac_toe {
                 }
             }
         }
-
 
         // game has not been won
         // game has no more free tiles
