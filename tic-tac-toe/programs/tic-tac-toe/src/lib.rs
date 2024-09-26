@@ -1,4 +1,6 @@
 use anchor_lang::prelude::*;
+use num_derive::*;
+use num_traits::*;
 
 declare_id!("EnXiwvsvV9c9p2yggdvzaBuAuGAms2smeqQeyEZB7Zmy");
 
