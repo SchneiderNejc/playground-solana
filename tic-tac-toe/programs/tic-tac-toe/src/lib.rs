@@ -11,8 +11,28 @@ pub mod tic_tac_toe {
     }
 }
 
-#[derive(Accounts)]
-pub struct Initialize {}
+#[derive(AnchorSerialize, AnchorDeserialize, Clone, PartialEq, Eq)]
+pub enum GameState {
+    Active,
+    Tie,
+    Won { winner: Pubkey },
+}
+
+
+#[derive(
+    AnchorSerialize,
+    AnchorDeserialize,
+    FromPrimitive,
+    ToPrimitive,
+    Copy,
+    Clone,
+    PartialEq,
+    Eq
+)]
+pub enum Sign {
+    X,
+    O,
+}
 
 #[account]
 pub struct Game {
