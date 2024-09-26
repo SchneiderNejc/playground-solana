@@ -132,19 +132,12 @@ pub enum TicTacToeError {
     GameAlreadyStarted
 }
 
-#[derive(AnchorSerialize, AnchorDeserialize)]
-pub struct Tile {
-    row: u8,
-    column: u8,
-}
-
 #[derive(AnchorSerialize, AnchorDeserialize, Clone, PartialEq, Eq)]
 pub enum GameState {
     Active,
     Tie,
     Won { winner: Pubkey },
 }
-
 
 #[derive(
     AnchorSerialize,
@@ -159,6 +152,21 @@ pub enum GameState {
 pub enum Sign {
     X,
     O,
+}
+
+#[derive(AnchorSerialize, AnchorDeserialize)]
+pub struct Tile {
+    row: u8,
+    column: u8,
+}
+
+#[derive(Accounts)]
+pub struct SetupGame<'info> {
+    #[account(init, payer = player_one, space = 8 + Game::MAXIMUM_SIZE)]
+    pub game: Account<'info, Game>,
+    #[account(mut)]
+    pub player_one: Signer<'info>,
+    pub system_program: Program<'info, System>
 }
 
 #[account]
