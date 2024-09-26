@@ -5,11 +5,13 @@ use num_traits::*;
 declare_id!("EnXiwvsvV9c9p2yggdvzaBuAuGAms2smeqQeyEZB7Zmy");
 
 
-pub const MAXIMUM_SIZE: usize = (32 * 2) + 1 + (9 * (1 + 1)) + (32 + 1);
+impl Game {
 
-#[program]
-pub mod tic_tac_toe {
-    use super::*;
+    pub const MAXIMUM_SIZE: usize = (32 * 2) + 1 + (9 * (1 + 1)) + (32 + 1);
+
+    pub fn setup_game(ctx: Context<SetupGame>, player_two: Pubkey) -> Result<()> {
+        ctx.accounts.game.start([ctx.accounts.player_one.key(), player_two])
+    }
 
     pub fn start(&mut self, players: [Pubkey; 2]) -> Result<()> {
         require_eq!(self.turn, 0, TicTacToeError::GameAlreadyStarted);
