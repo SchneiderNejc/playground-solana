@@ -102,5 +102,12 @@ describe("tic-tac-toe", () => {
         [null, null, null],
       ]
     );
+
+    // @todo finish writing the test by yourself (or check out the reference implementation).
+  });
+
+  // @todo Try to simulate a win and a tie!
+
+  // @todo Finish the following test.
   });
 });
