@@ -5,13 +5,33 @@ use num_traits::*;
 declare_id!("EnXiwvsvV9c9p2yggdvzaBuAuGAms2smeqQeyEZB7Zmy");
 
 
-impl Game {
+#[program]
+pub mod tic_tac_toe {
+    use super::*;
+    pub fn play(ctx: Context<Play>, tile: Tile) -> Result<()> {
+        let game = &mut ctx.accounts.game;
 
-    pub const MAXIMUM_SIZE: usize = (32 * 2) + 1 + (9 * (1 + 1)) + (32 + 1);
+
+        require_keys_eq!(
+            game.current_player(),
+            ctx.accounts.player.key(),
+            TicTacToeError::NotPlayersTurn
+        );
+
+
+        game.play(&tile)
+    }
 
     pub fn setup_game(ctx: Context<SetupGame>, player_two: Pubkey) -> Result<()> {
         ctx.accounts.game.start([ctx.accounts.player_one.key(), player_two])
     }
+}
+
+impl Game {
+
+    pub const MAXIMUM_SIZE: usize = (32 * 2) + 1 + (9 * (1 + 1)) + (32 + 1);
+
+
 
     pub fn start(&mut self, players: [Pubkey; 2]) -> Result<()> {
         require_eq!(self.turn, 0, TicTacToeError::GameAlreadyStarted);
@@ -154,6 +174,13 @@ pub struct SetupGame<'info> {
     #[account(mut)]
     pub player_one: Signer<'info>,
     pub system_program: Program<'info, System>
+}
+
+#[derive(Accounts)]
+pub struct Play<'info> {
+    #[account(mut)]
+    pub game: Account<'info, Game>,
+    pub player: Signer<'info>,
 }
 
 #[account]
