@@ -109,5 +109,58 @@ describe("tic-tac-toe", () => {
   // @todo Try to simulate a win and a tie!
 
   // @todo Finish the following test.
+  xit("tests negative scenario should fail.", async () => {
+    // Option 1
+    // try {
+    //   await play(
+    //     program,
+    //     gameKeypair.publicKey,
+    //     playerTwo,
+    //     { row: 5, column: 1 }, // ERROR: out of bounds row
+    //     4,
+    //     { active: {} },
+    //     [
+    //       [{ x: {} }, { x: {} }, null],
+    //       [{ o: {} }, null, null],
+    //       [null, null, null],
+    //     ]
+    //   )
+    //   // we use this to make sure we definitely throw an error
+    //   chai.assert(false, "should've failed but didn't ")
+    // } catch (_err) {
+    //   expect(_err).to.be.instanceOf(AnchorError)
+    //   const err: AnchorError = _err
+    //   expect(err.error.errorCode.number).to.equal(6000)
+    // });
+    // Option 2
+    // try {
+    //   await play(
+    //     program,
+    //     gameKeypair.publicKey,
+    //     playerOne, // ERROR: same player in subsequent turns
+    //     // change sth about the tx because
+    //     // duplicate tx that come in too fast
+    //     // after each other may get dropped
+    //     { row: 1, column: 0 },
+    //     2,
+    //     { active: {} },
+    //     [
+    //       [{ x: {} }, null, null],
+    //       [null, null, null],
+    //       [null, null, null],
+    //     ]
+    //   )
+    //   chai.assert(false, "should've failed but didn't ")
+    // } catch (_err) {
+    //   expect(_err).to.be.instanceOf(AnchorError)
+    //   const err: AnchorError = _err
+    //   expect(err.error.errorCode.code).to.equal('NotPlayersTurn')
+    //   expect(err.error.errorCode.number).to.equal(6003)
+    //   expect(err.program.equals(program.programId)).is.true
+    //   expect(err.error.comparedValues).to.deep.equal([
+    //     playerTwo.publicKey,
+    //     playerOne.publicKey,
+    //   ])
+    // }
   });
 });
