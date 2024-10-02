@@ -33,8 +33,8 @@ plt.xlabel("Slot")
 plt.ylabel("Prioritization Fee (micro-lamports)")
 plt.grid(True)
 
-# Display the plot
-plt.show()
+# Save the plot as a PNG image instead of showing it
+plt.savefig("prioritization_fees_plot.png")
 
 # Print out the prioritization fees and slots in a readable format
 for slot, fee in zip(slots, prioritization_fees):
