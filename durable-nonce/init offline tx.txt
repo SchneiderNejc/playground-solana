@@ -1,0 +1,40 @@
+
+# WO DURABLE NONCE
+NOTE: This fails because we're not using durable nonce.
+
+solana transfer receiver.json 0.1 \
+  --sign-only \
+  --blockhash DtDY7J7hREh2qs9eGNaePTSbZbt7tY3ftu54oQTKEcXU \
+  --fee-payer co-sender.json \
+  --from 5NLcXbjS7FTEp7rQvXFiRqrqjagK7SVRkrWcKBR8ANba \
+  --keypair co-sender.json
+
+solana transfer receiver.json 0.1 \
+  --allow-unfunded-recipient \
+  --blockhash DtDY7J7hREh2qs9eGNaePTSbZbt7tY3ftu54oQTKEcXU \
+  --from sender.json \
+  --keypair sender.json \
+  --signer  7unKMMiA7UzAKGPZR6LjjufYz5cbKycVqtwgELqbgu4s=75XAh9TNpPtg8EB55jmi2rn3ZY1xPsj9LRetxPE2s9hfhFszhYgTnpwfqoaF2itwAcX5WLVd8uGy3zbwKwStStv
+
+-------------
+
+W DURABLE NONCE
+
+solana new-nonce nonce-account.json
+solana nonce-account nonce-account.json
+
+solana transfer receiver.json 0.1 \
+  --sign-only \
+  --nonce nonce-account.json \
+  --blockhash BDS6hZUwbrhvCc4DPMttt1fFP2B676fs69t53LRfZfdU \
+  --fee-payer co-sender.json \
+  --from 5NLcXbjS7FTEp7rQvXFiRqrqjagK7SVRkrWcKBR8ANba \
+  --keypair co-sender.json
+
+solana transfer receiver.json 0.1 \
+  --nonce nonce-account.json \
+  --nonce-authority nonce-authority.json \
+  --blockhash BDS6hZUwbrhvCc4DPMttt1fFP2B676fs69t53LRfZfdU \
+  --from sender.json \
+  --keypair sender.json \
+  --signer 7unKMMiA7UzAKGPZR6LjjufYz5cbKycVqtwgELqbgu4s=QnYN7cijMhQhAyoDN4sZ2SL5FHfT1gzUmAtdBFvQ2LXJLcPH5Fdu3crgFwrWwP2Vra4Q7Jk4PrMdCT2fFMv7toj --allow-unfunded-recipient
