@@ -1,0 +1,1 @@
+we are able to calculate space by using the INIT_SPACE constant and adding 8 to the space constraint for Anchor's internal discriminator.
