@@ -1,15 +1,51 @@
 use anchor_lang::prelude::*;
 
-declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
+declare_id!("BsQjtTxv3bhrarFYZUiq9Hv3aRiBohGcpDDTJyctvvCb");
 
 #[program]
 pub mod crud_dapp {
     use super::*;
 
-    pub fn initialize(ctx: Context<Initialize>) -> Result<()> {
+    pub fn create_journal_entry(
+        ctx: Context<CreateEntry>,
+        title: String,
+        message: String,
+    ) -> Result<()> {
+        msg!("Journal Entry Created");
+        msg!("Title: {}", title);
+        msg!("Message: {}", message);
+
+        let journal_entry = &mut ctx.accounts.journal_entry;
+        journal_entry.owner = ctx.accounts.owner.key();
+        journal_entry.title = title;
+        journal_entry.message = message;
         Ok(())
     }
 }
 
+
 #[derive(Accounts)]
-pub struct Initialize {}
+#[instruction(title: String, message: String)]
+pub struct CreateEntry<'info> {
+    #[account(
+        init_if_needed,
+        seeds = [title.as_bytes(), owner.key().as_ref()],
+        bump,
+        payer = owner,
+        space = 8 + JournalEntryState::INIT_SPACE
+    )]
+    pub journal_entry: Account<'info, JournalEntryState>,
+    #[account(mut)]
+    pub owner: Signer<'info>,
+    pub system_program: Program<'info, System>,
+}
+
+#[account]
+#[derive(InitSpace)]
+pub struct JournalEntryState {
+    pub owner: Pubkey,
+    #[max_len(50)]
+    pub title: String,
+     #[max_len(1000)]
+    pub message: String,
+}
