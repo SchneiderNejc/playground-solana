@@ -36,6 +36,11 @@ pub mod crud_dapp {
 
         Ok(())
     }
+
+    pub fn delete_journal_entry(_ctx: Context<DeleteEntry>, title: String) -> Result<()> {
+        msg!("Journal entry titled {} deleted", title);
+        Ok(())
+    }
 }
 
 
@@ -62,9 +67,24 @@ pub struct UpdateEntry<'info> {
         mut,
         seeds = [title.as_bytes(), owner.key().as_ref()],
         bump,
-        realloc = 8 + 32 + 1 + 4 + title.len() + 4 + message.len(),
+        realloc = 8 + 32 + 1 + 4 + title.len() + 4 + message.len(), //1 is the PDA bump.
         realloc::payer = owner,
         realloc::zero = true,
+    )]
+    pub journal_entry: Account<'info, JournalEntryState>,
+    #[account(mut)]
+    pub owner: Signer<'info>,
+    pub system_program: Program<'info, System>,
+}
+
+#[derive(Accounts)]
+#[instruction(title: String)]
+pub struct DeleteEntry<'info> {
+    #[account(
+        mut,
+        seeds = [title.as_bytes(), owner.key().as_ref()],
+        bump,
+        close = owner,
     )]
     pub journal_entry: Account<'info, JournalEntryState>,
     #[account(mut)]
