@@ -1,0 +1,51 @@
+solana-test-validator
+
+solana-keygen new
+solana airdrop 10 <ACCOUNT_ADDRESS>
+solana account <ACCOUNT_ADDRESS>
+
+solana program deploy <PROGRAM_FILE_PATH>
+solana program show <ACCOUNT_ADDRESS>
+
+solana transfer --from /path/to/keypair.json <RECIPIENT_ADDRESS> <AMOUNT>
+solana transfer --from /path/to/keypair.json --simulate <RECIPIENT_ADDRESS> <AMOUNT>
+solana confirm <TRANSACTION_SIGNATURE>¸
+
+solana block-production
+solana logs
+Increase log verbosity with the -v flag if you need more detailed output for debugging.
+Use the --rpc-port and --rpc-bind-address options to customize the RPC server settings.
+Adjust the number of CPU cores used by the validator with the --gossip-host option to simulate network conditions more realistically.
+
+solana genesis-hash
+solana-test-validator --help
+solana-test-validator --ledger /path/to/custom/ledger
+
+solana-test-validator --reset
+
+solana feature status <ADDRESS>
+solana feature activate <FEATURE_KEYPAIR> <CLUSTER>
+solana-test-validator --deactivate-feature <FEATURE_PUBKEY> --reset
+
+solana-test-validator --version
+To test your programs against different versions of the Solana runtime, you can install multiple versions of the Solana CLI and switch between them using the solana-install set command:
+solana-install init <VERSION>
+
+To add existing onchain programs to your local environment, you can clone the program with a new ledger.
+solana-test-validator --clone PROGRAM_ADDRESS --url CLUSTER_PROGRAM_IS_DEPLOYED_TO
+solana-test-validator --clone PROGRAM_ADDRESS --url CLUSTER_PROGRAM_IS_DEPLOYED_TO --reset
+solana-test-validator --clone-upgradeable-program PROGRAM_ADDRESS --url CLUSTER_PROGRAM_IS_DEPLOYED_TO
+
+solana account PROGRAM_ADDRESS --output json > account_state.json
+solana-test-validator --reset --account PROGRAM_ADDRESS account_state.json
+solana --help
+
+Example Use Case #
+1. Clone the USDC mint address to your local validator
+solana-test-validator --clone EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v --url mainnet-beta --reset
+2. Create a token account
+spl-token create-account EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v --url localhost
+
+
+
+
