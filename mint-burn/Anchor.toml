@@ -2,7 +2,7 @@
 seeds = false
 skip-lint = false
 [programs.localnet]
-mint_burn = "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS"
+mint_burn = "88CszF3eRSWKca9ETBH33QME9kAZCpCPkDzYt37h2PR3"
 
 [registry]
 url = "https://api.apr.dev"
