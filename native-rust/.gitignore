@@ -1,0 +1,35 @@
+# Rust artifacts
+/target
+**/*.rs.bk
+
+# Cargo files
+/Cargo.lock
+/Cargo.toml.orig
+/Cargo.toml.local
+
+# IDE specific files
+/.vscode/
+/.idea/
+/*.iml
+
+# MacOS specific files
+.DS_Store
+
+# Linux specific files
+*~
+
+# Log files
+*.log
+
+# Test Ledger (if using Solana's test ledger)
+test-ledger/
+
+# Build scripts and artifacts
+/build/
+*.so
+*.dylib
+*.dll
+
+# Temporary files
+*.tmp
+*.temp
