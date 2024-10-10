@@ -1,3 +1,5 @@
+// No imports needed: web3, borsh, pg and more are globally available
+
 describe("Test", () => {
   it("Initialize", async () => {
     // Generate keypair for the new account
