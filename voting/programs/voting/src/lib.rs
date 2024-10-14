@@ -1,15 +1,30 @@
 use anchor_lang::prelude::*;
 
-declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
+declare_id!("GtZMCrJPXNu1UcDdvLK7Z1bYKJcJ8w7HWeWwxjGV3Xk4");
 
 #[program]
+
 pub mod voting {
     use super::*;
 
-    pub fn initialize(ctx: Context<Initialize>) -> Result<()> {
+    pub fn init_candidate(ctx: Context<InitializeCandidate>) -> Result<()> {
         Ok(())
     }
+
+    pub fn vote_for_candidate(ctx: Context<VoteCandidate>) -> Result<()> {
+        Ok(())
+    }
+
 }
 
+
+
 #[derive(Accounts)]
-pub struct Initialize {}
+
+pub struct InitializeCandidate{}
+
+
+
+#[derive(Accounts)]
+
+pub struct VoteCandidate{}
