@@ -1,0 +1,1 @@
+solana account nejctPbWZauU1Zae5BsunZLEWAsDX1v5GiaBYrxW6rY  --output json
