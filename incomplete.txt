@@ -1,0 +1,19 @@
+jest-bankrun
+TODO:
+Time travel
+Writing arbitrary accounts
+Copying Accounts from a live environment
+
+crud-dapp
+frontend
+
+lumberjack
+Insufficient instructions.
+Watch https://www.youtube.com/watch?v=fnhivg_pemI
+
+mint-burn
+Need to configure package versions in cargo.toml
+
+native-rust
+client side/tests are incomplete.
+It also is not clear how to run the tests or deploy/interact with the contract.
