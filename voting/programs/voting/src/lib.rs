@@ -12,28 +12,39 @@ pub mod voting {
         Ok(())
     }
 
-    pub fn vote_for_candidate(ctx: Context<VoteCandidate>) -> Result<()> {
+    pub fn vote_for_candidate(ctx: Context<VoteCandidate>, _candidate_name: String) -> Result<()> {
+        ctx.accounts.candidate.votes_received += 1;
         Ok(())
     }
 }
 
 #[derive(Accounts)]
+#[instruction(_candidate_Name: String)]
 pub struct InitializeCandidate<'info> {
     #[account(mut)]
     pub payer: Signer<'info>,
+
+    #[account(
+        init,
+        space = 8 + Candidate::INIT_SPACE,
+        payer = payer,
+        seeds = [_candidate_Name.as_bytes().as_ref()],
+        bump
+    )]
+    pub candidate: Account<'info, Candidate>,
+    pub system_program: Program<'info, System>,
 }
 
 #[derive(Accounts)]
-pub struct VoteCandidate {}
 
-fn check(ctx: &Context<InitializeCandidate>) -> Result<()> {
-    // Check if signer === owner
-    require_keys_eq!(
-        ctx.accounts.payer.key(),
-        OWNER.parse::<Pubkey>().unwrap(),
-        OnlyOwnerError::NotOwner
-    );
-    Ok(())
+#[instruction(_candidate_Name: String)]
+pub struct VoteCandidate<'info> {
+    #[account(
+        mut,
+        seeds = [_candidate_Name.as_bytes().as_ref()],
+        bump,
+)]
+    pub candidate: Account<'info, Candidate>,
 }
 
 #[error_code]
