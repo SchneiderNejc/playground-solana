@@ -8,7 +8,11 @@ const OWNER: &str = "8os8PKYmeVjU1mmwHZZNTEv5hpBXi5VvEKGzykduZAik";
 pub mod voting {
     use super::*;
 
-    pub fn init_candidate(ctx: Context<InitializeCandidate>) -> Result<()> {
+    #[access_control(check(&ctx))]
+    pub fn init_candidate(
+        ctx: Context<InitializeCandidate>,
+        _candidate_name: String
+    ) -> Result<()> {
         Ok(())
     }
 
@@ -19,16 +23,15 @@ pub mod voting {
 }
 
 #[derive(Accounts)]
-#[instruction(_candidate_Name: String)]
+#[instruction(_candidate_name: String)]
 pub struct InitializeCandidate<'info> {
     #[account(mut)]
     pub payer: Signer<'info>,
-
     #[account(
         init,
         space = 8 + Candidate::INIT_SPACE,
         payer = payer,
-        seeds = [_candidate_Name.as_bytes().as_ref()],
+        seeds = [_candidate_name.as_bytes().as_ref()],
         bump
     )]
     pub candidate: Account<'info, Candidate>,
@@ -36,15 +39,30 @@ pub struct InitializeCandidate<'info> {
 }
 
 #[derive(Accounts)]
-
-#[instruction(_candidate_Name: String)]
+#[instruction(_candidate_name: String)]
 pub struct VoteCandidate<'info> {
     #[account(
         mut,
-        seeds = [_candidate_Name.as_bytes().as_ref()],
+        seeds = [_candidate_name.as_bytes().as_ref()],
         bump,
-)]
+    )]
     pub candidate: Account<'info, Candidate>,
+}
+
+#[account]
+#[derive(InitSpace)]
+pub struct Candidate {
+    pub votes_received: u8,
+}
+
+fn check(ctx: &Context<InitializeCandidate>) -> Result<()> {
+    // Check if signer === owner
+    require_keys_eq!(
+        ctx.accounts.payer.key(),
+        OWNER.parse::<Pubkey>().unwrap(),
+        OnlyOwnerError::NotOwner
+    );
+    Ok(())
 }
 
 #[error_code]
