@@ -1,5 +1,8 @@
 use anchor_lang::prelude::*;
 use anchor_lang::system_program::{transfer, Transfer};
+use anchor_lang::solana_program::{program::invoke_signed, system_instruction};
+
+
 
 declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 
@@ -16,22 +19,18 @@ pub mod cpi {
         let bump_seed = ctx.bumps.pda_account;
         let signer_seeds: &[&[&[u8]]] = &[&[b"pda", seed.as_ref(), &[bump_seed]]];
 
-        let cpi_context = CpiContext::new(
-            program_id,
-            Transfer {
-                from: from_pubkey,
-                to: to_pubkey,
-            },
-        )
-        .with_signer(signer_seeds);
+        let instruction =
+            &system_instruction::transfer(&from_pubkey.key(), &to_pubkey.key(), amount);
 
-        transfer(cpi_context, amount)?;
+        invoke_signed(instruction, &[from_pubkey, to_pubkey, program_id], signer_seeds)?;
         Ok(())
     }
 }
 
 #[derive(Accounts)]
 pub struct SolTransfer<'info> {
+    // Hardcoded string "pda" and the address of the recipient account
+    // mean the address for pda_account is unique for each recipient.
     #[account(
         mut,
         seeds = [b"pda", recipient.key().as_ref()],
