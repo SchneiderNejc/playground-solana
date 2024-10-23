@@ -8,9 +8,9 @@ describe("cpi", () => {
 
   const program = anchor.workspace.Cpi as Program<Cpi>;
 
-  it("Is initialized!", async () => {
-    // Add your test here.
-    const tx = await program.methods.initialize().rpc();
-    console.log("Your transaction signature", tx);
-  });
+  const [PDA] = PublicKey.findProgramAddressSync(
+    [Buffer.from("pda"), wallet.publicKey.toBuffer()],
+    program.programId,
+  );
+
 });
