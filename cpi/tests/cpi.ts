@@ -10,7 +10,27 @@ describe("cpi", () => {
 
   const [PDA] = PublicKey.findProgramAddressSync(
     [Buffer.from("pda"), wallet.publicKey.toBuffer()],
-    program.programId,
+    program.programId
   );
 
+  it("Fund PDA with SOL", async () => {
+    const transferInstruction = SystemProgram.transfer({
+      fromPubkey: wallet.publicKey,
+      toPubkey: PDA,
+      lamports: transferAmount,
+    });
+
+    const transaction = new Transaction().add(transferInstruction);
+
+    const transactionSignature = await sendAndConfirmTransaction(
+      connection,
+      transaction,
+      [wallet.payer] // signer
+    );
+
+    console.log(
+      `\nTransaction Signature:` +
+        `https://solana.fm/tx/${transactionSignature}?cluster=devnet-solana`
+    );
+  });
 });
