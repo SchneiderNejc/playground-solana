@@ -2,7 +2,7 @@
 seeds = false
 skip-lint = false
 [programs.localnet]
-cpi_variants = "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS"
+cpi_variants = "4fj6bhyRhn5oAejXEQRFvuTK45JUk4vLJG6TbvoxKbTw"
 
 [registry]
 url = "https://api.apr.dev"
