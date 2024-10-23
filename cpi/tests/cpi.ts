@@ -33,4 +33,18 @@ describe("cpi", () => {
         `https://solana.fm/tx/${transactionSignature}?cluster=devnet-solana`
     );
   });
+
+  it("SOL Transfer with PDA signer", async () => {
+    const transactionSignature = await program.methods
+      .solTransfer(new BN(transferAmount))
+      .accounts({
+        pdaAccount: PDA,
+        recipient: wallet.publicKey,
+      })
+      .rpc();
+
+    console.log(
+      `\nTransaction Signature: https://solana.fm/tx/${transactionSignature}?cluster=devnet-solana`,
+    );
+  });
 });
