@@ -17,3 +17,6 @@ Need to configure package versions in cargo.toml
 native-rust
 client side/tests are incomplete.
 It also is not clear how to run the tests or deploy/interact with the contract.
+
+token-extensions/immutable-owner
+isATA always returns false, should return true for ATAs.
