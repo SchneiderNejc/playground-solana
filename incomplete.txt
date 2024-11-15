@@ -20,3 +20,8 @@ It also is not clear how to run the tests or deploy/interact with the contract.
 
 token-extensions/immutable-owner
 isATA always returns false, should return true for ATAs.
+
+token-extensions/transfer-fees
+unable to fetch fee data from chain, therefore unable to complete calculation in transferTokens.js. Finish that script.
+Finish: transferTokens.js
+Todo: Harvest withheld tokens to mint, Withdraw withheld tokens from mint.
